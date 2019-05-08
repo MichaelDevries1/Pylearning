@@ -16,7 +16,9 @@ def get_weather(city):
     url = 'http://api.openweathermap.org/data/2.5/weather'
     params = {'APPID': weather_api_key, 'q': city, 'units': 'imperial'}
     response = requests.get(url, params=params)
-    print(response.json())
+    weather = response.json()
+
+    print(weather['name'])
 
 root = tk.Tk()
 root.title('Weather App')
