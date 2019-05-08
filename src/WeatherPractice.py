@@ -13,7 +13,7 @@ def city_entry(entry):
 
 def get_weather(city):
     weather_api_key = 'ca2b89c6af0d2220dd8ab6b4dfcdd439'
-    url = 'http://api.openweathermap.org/data/2.5/forecast'
+    url = 'http://api.openweathermap.org/data/2.5/weather'
     params = {'APPID': weather_api_key, 'q': city, 'units': 'imperial'}
     response = requests.get(url, params=params)
     print(response.json())
