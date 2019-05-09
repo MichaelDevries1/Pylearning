@@ -16,13 +16,16 @@ def city_entry(entry):
 
 
 def get_weather(city):
-    weather_api_key = 'ca2b89c6af0d2220dd8ab6b4dfcdd439'
-    url = 'http://api.openweathermap.org/data/2.5/weather'
-    params = {'APPID': weather_api_key, 'q': city, 'units': 'imperial'}
-    response = requests.get(url, params=params)
-    weather = response.json()
+    try:
+        weather_api_key = 'ca2b89c6af0d2220dd8ab6b4dfcdd439'
+        url = 'http://api.openweathermap.org/data/2.5/weather'
+        params = {'APPID': weather_api_key, 'q': city, 'units': 'imperial'}
+        response = requests.get(url, params=params)
+        weather = response.json()
 
-    result_label['text'] = format(weather)
+        result_label['text'] = format(weather)
+    except:
+        result_label['text'] = "Can't connect to the server."
 
 
 def format(weather):
