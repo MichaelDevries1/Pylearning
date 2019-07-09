@@ -19,6 +19,7 @@ class NewNoteTaker:
     __ScrollBar = Scrollbar(__TextArea)
     __FileName = None
     __Saved = False
+    __ExitAfterAction = False
 
     def __init__(self, **kwargs):
         try:
@@ -80,24 +81,27 @@ class NewNoteTaker:
 
     def __quitapplication(self):
         if not self.__Saved:
-            self.__savebeforequit()
-        #self.__root.destroy()
+            self.__checkforsave()
+        else:
+            self.__root.destroy()
 
-    def __savebeforequit(self):
-        __top = Toplevel(height=75, width=300)
-        __top.title("Caution")
-        __frame = tk.Frame(__top)
-        __frame.place(anchor='n', relx=0, rely=0)
+    def __checkforsave(self):
+        __unsavedwarning = Toplevel(height=75, width=300)
+        __unsavedwarning.title("Caution")
+        __frame = tk.Frame(__unsavedwarning)
+        __frame.place(relx=0, rely=0)
 
-        __caution = tk.Label(__top, text='Are you sure you wish to exit without saving?')
-        __yes = tk.Button(__top, text="Yes", command=self.__root.destroy)
-        __no = tk.Button(__top, text="No", command=self.__savefile)
+        __caution = tk.Label(__unsavedwarning, text='Are you sure you wish to exit without saving?')
+        __yes = tk.Button(__unsavedwarning, text="Yes", command=self.__root.destroy)
+        __no = tk.Button(__unsavedwarning, text="No", command=self.__savebeforeexit)
 
         __caution.place(anchor='n' + 'w', relx=.1, rely=.1)
         __yes.place(anchor='n', relx=.3, rely=.5, relwidth=.2)
         __no.place(anchor='n', relx=.7, rely=.5, relwidth=.2)
 
-
+    def __savebeforeexit(self):
+        self.__savefile()
+        self.__root.destroy()
 
     def __showabout(self):
         showinfo("Notepad", "This is my first try at creating a word processor!")
